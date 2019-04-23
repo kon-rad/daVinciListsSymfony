@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Entity\TodoLists;
 use App\GreetingGenerator;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,14 +34,14 @@ class DefaultController extends AbstractController
     /**
      * @Route("/")
      */
-    public function index($name, LoggerInterface $logger, GreetingGenerator $generator)
+    public function index()
     {
-        $greeting = $generator->getRandomGreeting();
+        $entityManager = $this->getDoctrine()->getManager();
 
-        $logger->info("saying $greeting to $name");
-
+        $list = $entityManager->getRepository(TodoLists::class)->findBy(array(), array('name' => 'DESC'));
+        dump($list);
         return $this->render('default/index.html.twig', [
-            'name' => $name,
+            'list' => $list,
         ]);
     }
 }

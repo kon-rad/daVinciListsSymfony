@@ -1,5 +1,14 @@
 {%  extends 'base.html.twig'  %}
 
 {% block body %}
-    <h1>Hello {{  name|greet  }}</h1>
+    <h1>Hello, Welcome to DaVinci Lists</h1>
+    <div class="row">
+        <div class="col s12 m6">
+            {% for item in list %}
+                <div class="card">
+                    {{ item.name }}
+                </div>
+            {% endfor %}
+        </div>
+    </div>
 {%  endblock  %}
